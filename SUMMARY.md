@@ -10,3 +10,4 @@
 * [🍔 Tools we cook](pages/ToolsWeCook.md)
 * [🌵 Code versioning](pages/CodeVersioning.md)
 * [📊 Google Analytics](pages/GoogleAnalytics.md)
+* [📖 Paging implementation](pages/PagingImplementation.md)
