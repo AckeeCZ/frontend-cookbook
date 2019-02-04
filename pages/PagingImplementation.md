@@ -191,7 +191,7 @@ export const queryStringParamsSelector = createSelector(
 
 #### Saga
 
-And finally in the saga (if you uses `redux-saga`) or elsewhere, use the selector from above to get params for API call:
+And finally in the saga (if you use `redux-saga`) or elsewhere, use the selector from above to get params for API call:
 
 ```js
 // sagas/usersSaga.js
@@ -226,7 +226,7 @@ export default function*() {
 
 ## Conclusion
 
-Here we are, that's all you need to quickly implement pagination by using _Redux_, _React router_ and `routeDependencies` enhancer. Remember that implementation is slightly simplified for purpose of this recipe so if you fell it could be programmed better, don't hesitate and adjust it as you need.
+Here we are, that's all you need to quickly implement pagination by using _Redux_, _React router_ and `routeDependencies` enhancer. Remember that implementation is slightly simplified for purpose of this recipe so if you feel it could be programmed better, don't hesitate and adjust it as you need.
 
 ### Extending with search
 
@@ -238,7 +238,7 @@ Create your `UsersSearch` component, notice how it is similar to [`Pagination`](
 // containers/UsersSearch.js
 import { compose, withProps } from 'recompose';
 import { withRouter } from 'react-router';
-import {  } from 'query-string';
+import { qs } from 'query-string';
 
 const UsersSearch = ({ onSearch }) => (
     <input type="text" onChange={e => onSearch(e.target.value)} />
