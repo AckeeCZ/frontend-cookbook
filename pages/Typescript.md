@@ -283,3 +283,25 @@ interface Person {
 
 
 -----
+
+## Article [TypeScript Tutorial For Beginners: The Missing Guide (2019)](https://www.valentinog.com/blog/typescript/)
+
+* catch serious and silly mistakes in your code
+* codebase will become well structured and almost self-documenting
+* improved autocompletion in your editor
+
+Generate `tsconfig.json`
+
+```sh
+npm run tsc -- --init
+```
+
+TypeScript compiles down to “vanilla” JavaScript. The key target determines the desired JavaScript version, ES5 (or a newest release).
+
+
+With **strict set to true TypeScript enforces the maximum level of type checks** on your code enabling amongst the other:
+
+* **noImplicitAny** true: TypeScript complains when variables do not have a defined type
+* **alwaysStrict** true: 
+    * prevents accidental global variables, default “this” binding, and more
+    * when “alwaysStrict” is set true TypeScript emits “use strict” at the very top of every JavaScript file
