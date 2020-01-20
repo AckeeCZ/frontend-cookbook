@@ -1,6 +1,17 @@
 # Typescript
 
-## Article [Get started with typescript in 20119](https://www.robertcooper.me/get-started-with-typescript-in-2019)
+## Content
+* Articles
+    * [Get started with typescript in 2019](#get-started-with-typescript-in-2019)
+    * [TypeScript Tutorial For Beginners: The Missing Guide (2019)](#typescript-tutorial-for-beginners-the-missing-guide-2019)
+    * [The Typescript Tax](#the-typescript-tax)
+    * [Better reducers with React and Typescript](#better-reducers-with-react-and-typescript)
+    * [Type aliases vs. interfaces in TypeScript-based React apps](#type-aliases-vs-interfaces-in-typescript-based-react-apps)
+* [Guides](#guides)
+
+## Get started with typescript in 2019
+
+> You can find the original article [here](https://www.robertcooper.me/get-started-with-typescript-in-2019)
 
 ### Types
 
@@ -284,7 +295,8 @@ interface Person {
 
 -----
 
-## Article [TypeScript Tutorial For Beginners: The Missing Guide (2019)](https://www.valentinog.com/blog/typescript/)
+## TypeScript Tutorial For Beginners: The Missing Guide (2019)
+> You can find the original article [here](https://www.valentinog.com/blog/typescript/)
 
 * catch serious and silly mistakes in your code
 * codebase will become well structured and almost self-documenting
@@ -305,3 +317,136 @@ With **strict set to true TypeScript enforces the maximum level of type checks**
 * **alwaysStrict** true: 
     * prevents accidental global variables, default “this” binding, and more
     * when “alwaysStrict” is set true TypeScript emits “use strict” at the very top of every JavaScript file
+
+---
+
+## The Typescript Tax
+
+> You can find the article [here](https://medium.com/javascript-scene/the-typescript-tax-132ff4cb175b)
+
+### What I love about Typescript
+
+* Static types can be very useful to help document functions, clarify usage, and reduce cognitive overhead.
+* Type annotations can be optional in TypeScript.
+* TypeScript supports interfaces, which are reusable. A single interface can have many implementations.
+
+### TypeScript ROI in Numbers
+
+👍
+*  Developer Tooling (vs. Inference Tools)  **+2**
+*  API Documentation (vs. Defaults, Docs) **+2**
+*  Refactoring **+1**
+*  Type safety (vs. Reviews, TDD) **+0.2**
+
+✊
+
+*  New JS Features (vs. Babel) **0**
+*  Node JS Features (vs. Babel) **0**
+
+👎
+
+*  Recruiting **-0.5**
+*  Setup, Initial training **-1**
+*  Missing Featres (HOFs, Composition) **-2**
+*  Ongoing mentorship **-2.5**
+*  Typing overhead **-3**
+
+TypeScript is only capable of addressing a theoretical maximum of 20% of “public bugs”, where public means that the bugs survived past the implementation phase and got committed to the public repository
+
+Because there are so many bugs that are not detectable by static types, it would be irresponsible to skip other quality control measures like design review, spec review, code review, and TDD
+
+---
+
+## Better reducers with React and Typescript
+
+> You can find the article [here](https://blog.usejournal.com/writing-better-reducers-with-react-and-typescript-3-4-30697b926ada)
+
+```ts
+export function updateName(name: string) {
+  return {
+    type: "UPDATE_NAME",
+    name
+  }
+}
+type Action = ReturnType<typeof updateName>
+```
+
+The ReturnType extracts the type of what is being returned from the function passed to its arguments. It's available since Typescript 2.8.
+
+It interpretes `Action` as `{ type: string, name: string }` meanwhile
+
+```ts
+export function updateName(name: string) {
+  return <const>{
+    type: "UPDATE_NAME",
+    name
+  }
+}
+```
+
+interpretes `Action` as 
+
+```ts
+{ 
+    readonly type: "UPDATE_NAME";
+    readonly name: string;
+}
+```
+
+so then we cak type particular reducer actions as
+
+```ts
+type Action = ReturnType<
+ typeof updateName | typeof addPoints | typeof setLikesGames
+>
+```
+
+and typecheck actions in reducer.
+
+Check it at full [example](https://gist.github.com/schettino/c8bf5062ef99993ce32514807ffae849)
+
+
+---
+
+## Type aliases vs. interfaces in TypeScript-based React apps
+
+> You can find the article [here](https://medium.com/@koss_lebedev/type-aliases-vs-interfaces-in-typescript-based-react-apps-e77c9a1d5fd0)
+
+
+If you write object-oriented code — use interfaces, if you write functional code — use type aliases.
+
+**In React applications, just use type aliases.**
+
+Reasons:
+
+1. ### Power of interfaces isn’t useful in React applications
+    One of the main things that differentiate interfaces from type aliases is the ability to merge declarations.
+
+2. ### Type aliases are more composable
+    One thing that type aliases can do that interfaces can’t is create an intersection with a type alias that uses union operator within its definition.
+
+    ```ts
+    type CreditCard = {
+        number: string
+        expMonth: number
+        expYear: number
+    }
+
+    type Chargeable = { token: string } | { cvc: number }
+
+    type ChargeableCreditCard = CreditCard & Chargeable
+    ```
+    
+3. ### Type aliases require less keyboard typing
+    It’s simply faster to type `type Props` than `interface IProps`.
+
+Disable `interface-over-type-literal` setting in TS Lint to start using type aliases in our React applications.
+
+---
+
+## Guides
+
+### React Redux typescript guide
+
+* available at [Github](https://github.com/piotrwitek/react-redux-typescript-guide)
+* [live examples](https://piotrwitek.github.io/react-redux-typescript-guide/)
