@@ -48,31 +48,28 @@ function* observeUserFirebase() {
 
  ## Social authentication providers
 
-This is a brief description of how to implement with [Google](https://firebase.google.com/docs/auth/web/google-signin) or [Facebook](https://firebase.google.com/docs/auth/web/facebook-login) account in the Redux saga driven app having flow controlled by our authentication library [Petrus](https://www.npmjs.com/package/@ackee/petrus).
+This is a brief description of how to authenticate with [Google](https://firebase.google.com/docs/auth/web/google-signin), [Facebook](https://firebase.google.com/docs/auth/web/facebook-login) or [Apple](https://firebase.google.com/docs/auth/web/apple) account in the Redux saga driven app. The flow is controlled by our authentication library [Petrus](https://www.npmjs.com/package/@ackee/petrus) and uses [Firebase auth](https://firebase.google.com/docs/auth/web/start) library.
 
 > It's not a complete copy/paste-in example. There are some minor parts missing or simplified for the sake of keeping the recipe short & readable so don't hesitate to adjust it to your needs 😉
 
 ### UI part
 
-For social login you can use [`react-facebook-login`](https://www.npmjs.com/package/react-facebook-login) and [`react-google-login`](https://www.npmjs.com/package/react-google-login) components which are pretty well customizable and have suitable interface.
+For social login components we can use [`react-facebook-login`](https://www.npmjs.com/package/react-facebook-login), [`react-google-login`](https://www.npmjs.com/package/react-google-login) or [`react-apple-login`](https://www.npmjs.com/package/react-apple-login) are pretty well customizable and have suitable interface. But they still require some configuration and flow driving and we can let Firebase do lot of that for us.
 
 ```js
 const SocialLoginType = {
     GOOGLE: 'google',
     FACEBOOK: 'facebook',
+    APPLE: 'apple',
 };
 ```
 
 the `SocialLoginType` enum is used to identify which login type was used by user
 
 ```jsx
-<GoogleLogin
-    clientId={config.google.clientId}
-    buttonText="Login with Google"
-    cookiePolicy="single_host_origin"
-    onSuccess={response => loginWithSocialToken(response.tokenId, SocialLoginType.GOOGLE)}
-    onFailure={(error, details) => loginFailure(error)}
-/>
+<button onClick={() => loginWithSocialProvider(SocialLoginType.GOOGLE)}>
+    Login with Google
+</button>
 ```
 
 ### Business logic
@@ -91,7 +88,7 @@ const firebaseAuth = app.auth();
  function* authenticate(payload) {
     yield firebaseAuth.setPersistence(firebaseAuth.Auth.Persistence.LOCAL);
 
-    const user = yield retrieveUser(payload);
+    const user = yield signInWithSocialProvider(payload);
     const accessToken = yield getAccessToken(user);
 
     return {
@@ -106,7 +103,7 @@ const firebaseAuth = app.auth();
 }
 
 function* refreshTokens({ refreshToken }) {
-    const user = yield retrieveUser();
+    const user = yield getUserFromFirebase();
     const accessToken = yield getAccessToken(user);
 
     return {
@@ -116,7 +113,7 @@ function* refreshTokens({ refreshToken }) {
 }
 
 export default function* getAuthUser({ accessToken }) {
-    const user = yield retrieveUser();
+    const user = yield getUserFromFirebase();
 
     return getUserData(user);
 }
@@ -124,10 +121,10 @@ export default function* getAuthUser({ accessToken }) {
 
 as you certainly noticed, there is few helpers used in the functions. Each of them will be described separately in next section.
 
-Last step to wire components up with Petrus, is to catch action dispatched by`loginWithSocialToken`  and tell Petrus to begin logging process. Payload of the action is an [object dispatched from Login component](#ui-part).
+Last step to wire components up with Petrus, is to catch action dispatched by`loginWithSocialProvider`  and tell Petrus to begin logging process. Payload of the action is an object with social login type [ dispatched from Login component](#ui-part).
 
 ```js
-function* handleLoginForm(action) {
+function* handleSocialLogin(action) {
     yield put(Petrus.loginRequest(action.payload));
 }
 
@@ -137,7 +134,7 @@ function handleLoginFailed({ error }) {
 
 export default function*() {
     yield all([
-        yield takeEvery(types.LOGIN_WITH_SOCIAL_TOKEN, handleLoginForm),
+        yield takeEvery(types.LOGIN_WITH_SOCIAL_PROVIDER, handleSocialLogin),
         yield takeEvery(types.LOGIN_FAILURE, handleLoginFailed),
     ]);
 }
@@ -185,11 +182,9 @@ const getUserData = user => {
 };
 ```
 
-**`retrieveUser`**
+**`getUserFromFirebase`**
 
-This is crucial part of the flow, althought its name implies to be about getting user, it does much more. It's true that 
-when called, it will return `firebase.User` as soon and his is available.  
-When the user is not logged in yet and `loginData` are provided (that's a case of use inside [`authenticate`](#social-providers-authentication)) it'll try to authenticate using one of defined social login providers and instantly return just authenticated user.
+When called, it will return [`firebase.User`](https://firebase.google.com/docs/reference/js/firebase.User) as soon and it is available.  
 
 ```js
 function authStateChanged() {
@@ -200,7 +195,7 @@ function authStateChanged() {
     });
 }
 
-async function getUserFromFirebase() {
+export default async function getUserFromFirebase() {
     const { currentUser } = firebaseApp.auth;
 
     if (currentUser) {
@@ -211,30 +206,43 @@ async function getUserFromFirebase() {
 
     return user;
 }
+```
 
-export default async function retrieveUser(loginData = {}) {
-    const { token, type } = loginData;
-    const user = await getUserFromFirebase();
+**`signInWithSocialProvider`**
 
-    if (!user && token) {
-        let credential;
+This is crucial part of the flow. Once we call `signInWithPopup`, firebase take care of authenticating using one of defined social login providers (includes opening new window) and instantly return just authenticated user. We are using sign in with opening new window, but there are also `signInWithRedirect` and [others available](https://firebase.google.com/docs/reference/js/firebase.auth.Auth#methods).
 
-        switch (type) {
-            case SocialLoginType.GOOGLE:
-                credential = firebase.auth.GoogleAuthProvider.credential(token);
-                break;
-            case SocialLoginType.FACEBOOK:
-                credential = firebase.auth.FacebookAuthProvider.credential(token);
-                break;
-            default:
-                Log.warn(`Unknown social login type ${type}`);
-                return null;
-        }
 
-        const result = await firebaseApp.auth.signInWithCredential(credential);
+```js
+export default async function signInWithSocialProvider(loginData = {}) {
+    const { loginType } = loginData;
 
-        return result.user;
+    let provider;
+    let scopes;
+
+    switch (loginType) {
+        case LoginType.GOOGLE:
+            provider = new firebase.auth.GoogleAuthProvider();
+            scopes = ['profile', 'email'];
+            break;
+        case LoginType.FACEBOOK:
+            provider = new firebase.auth.FacebookAuthProvider();
+            scopes = ['public_profile', 'email'];
+            break;
+        case LoginType.APPLE:
+            provider = new firebase.auth.OAuthProvider('apple.com');
+            scopes = ['name', 'email'];
+            break;
+        default:
+            Log.warn(`Unknown login type ${loginType}`);
+            return null;
     }
+
+    for (let scope of scopes) {
+        provider.addScope(scope);
+    }
+
+    const { user } = await firebaseApp.auth.signInWithPopup(provider);
 
     return user;
 }
