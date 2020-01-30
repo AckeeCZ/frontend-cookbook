@@ -54,7 +54,7 @@ This is a brief description of how to authenticate with [Google](https://firebas
 
 ### UI part
 
-We could use for social login components [`react-facebook-login`](https://www.npmjs.com/package/react-facebook-login), [`react-google-login`](https://www.npmjs.com/package/react-google-login) or [`react-apple-login`](https://www.npmjs.com/package/react-apple-login) are pretty well customizable and have suitable interface. But they still require some configuration and flow driving and we can let Firebase do lot of that for us.
+For social login components we can use [`react-facebook-login`](https://www.npmjs.com/package/react-facebook-login), [`react-google-login`](https://www.npmjs.com/package/react-google-login) or [`react-apple-login`](https://www.npmjs.com/package/react-apple-login) are pretty well customizable and have suitable interface. But they still require some configuration and flow driving and we can let Firebase do lot of that for us.
 
 ```js
 const SocialLoginType = {
@@ -184,7 +184,7 @@ const getUserData = user => {
 
 **`getUserFromFirebase`**
 
-When called, it will return [`firebase.User`](https://firebase.google.com/docs/reference/js/firebase.User) as soon and he is available.  
+When called, it will return [`firebase.User`](https://firebase.google.com/docs/reference/js/firebase.User) as soon and it is available.  
 
 ```js
 function authStateChanged() {
