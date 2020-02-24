@@ -1,10 +1,10 @@
 # 🎨 Using Fela - tips & tricks
 
-Using [Fela](http://fela.js.org) for components styling is easy and pretty straightforward. But time to time we find that something  that was easy to make in CSS with preprocessors isn't such obvious now. Here we should collect short useful recipes to prevent stuck in development because of some problem in basic things.
+Using [Fela](http://fela.js.org) for components styling is easy and pretty straightforward. But time to time we find that something that was easy to make in CSS with preprocessors isn't such obvious now. Here we should collect short useful recipes to prevent stuck in development because of some problem in basic things.
 
-* [Manipulation colors](#manipulating-colors)
-* [Animations using keyframes](#animations-using-keyframes)
-* [Styling components](#styling components)
+- [Manipulation colors](#manipulating-colors)
+- [Animations using keyframes](#animations-using-keyframes)
+- [Styling components](#styling components)
 
 ## Manipulating colors
 
@@ -137,26 +137,26 @@ and now the loader is spinning, awesome!
 
 There is severeal ways of styling components using Fela
 
-* [`FelaComponent`](#felacomponent)
-* [`connect` HOC](#connect-hoc)
-* [`useFela` hook](#usefela-hook)
-* [`createComponent` and `createComponentWithProxy`](#createcomponent-and-createcomponentwithproxy)
-* [jsx pragma `fe`](#jsx-pragma-fe)
+- [`FelaComponent`](#felacomponent)
+- [`connect` HOC](#connect-hoc)
+- [`useFela` hook](#usefela-hook)
+- [`createComponent` and `createComponentWithProxy`](#createcomponent-and-createcomponentwithproxy)
+- [jsx pragma `fe`](#jsx-pragma-fe)
 
-Will's go through all of them and look at how use them and what are their advantages and disadvantages. 
+Will's go through all of them and look at how use them and what are their advantages and disadvantages.
 
-For all examples we assume file containing styles 
+For all examples we assume file containing styles
 
 ```js
 // styles.js
 const buttonStyle = ({ big, color }) => ({
   backgroundColor: color,
   fontSize: big ? 18 : 15
-})
+});
 
 const iconStyle = () => ({
-  marginLeft: '0.5em',
-})
+  marginLeft: "0.5em"
+});
 ```
 
 But first let's show several general tricks for styling
@@ -166,7 +166,6 @@ But first let's show several general tricks for styling
 Fela generates in development poorly debuggable class names like `_137u7ef`. But there is a way how to change it and make class names meaningful like `Button_button_137u7ef`.
 
 We need to just use [`fela-monolithic`](https://github.com/robinweser/fela/tree/master/packages/fela-monolithic) enhancer with `prettySelectors` option set to `true` when configuring Fela renderer.
-
 
 ```js
 import { createRenderer } from 'fela';
@@ -192,16 +191,16 @@ Usually we'll write styles as a functions, because it brings an advantage of pas
 const buttonStyle = ({ big, theme }) => ({
   backgroundColor: theme.colors.red,
   fontSize: big ? 18 : 15
-})
+});
 ```
 
 however if we don't need any of these features, we can define a style as a simple object
 
 ```js
 const buttonStyle = {
-  backgroundColor: 'red',
-  fontSize: 16,
-}
+  backgroundColor: "red",
+  fontSize: 16
+};
 ```
 
 it's useful for prototyping and refactoring purposes rather than for daily use, because we value the consistency of writing styles and **functions are a preferred way**.
@@ -211,15 +210,15 @@ it's useful for prototyping and refactoring purposes rather than for daily use, 
 Fela provides `combineRules` helper for composing more styles together
 
 ```js
-import { combineRules } from 'fela'
+import { combineRules } from "fela";
 
-const formButtonStyle = combineRules(buttonStyle, formItemStyle)
+const formButtonStyle = combineRules(buttonStyle, formItemStyle);
 ```
 
 however there is a syntax sugar definition
 
 ```js
-const formButtonStyle = [buttonStyle, formItemStyle]
+const formButtonStyle = [buttonStyle, formItemStyle];
 ```
 
 the two definitinos are equivalent.
@@ -242,9 +241,10 @@ const Button = ({ color, big = false, text, icon = null }) => (
 // usage
 <Button color="red" text="Click me" />
 ```
-* Each **`FelaComponent` renders `RenderProvider` and `ThemeProvider`** and as we use it more and more, components tree complexity grows.
 
-* `FelaComponent` is rendered as a `div` element in default. We can change it with `as` prop however this property can be only string. If we want to render it as an another component we need to use "children as a render function" pattern
+- Each **`FelaComponent` renders `RenderProvider` and `ThemeProvider`** and as we use it more and more, components tree complexity grows.
+
+- `FelaComponent` is rendered as a `div` element in default. We can change it with `as` prop however this property can be only string. If we want to render it as an another component we need to use "children as a render function" pattern
 
   ```jsx
   import { FelaComponent } from 'react-fela'
@@ -268,8 +268,8 @@ const Button = ({ color, big = false, text, icon = null }) => (
   ```
 
   As you may notice, nesting components styled this way tends to a messy code as components grow
-* We need to pass modificator props like `big`, `color` etc. into every `FelaComponent` which style want to use them
 
+- We need to pass modificator props like `big`, `color` etc. into every `FelaComponent` which style want to use them
 
 #### Overriding styles
 
@@ -291,13 +291,18 @@ const buttonInAppStyle = () => ({
   margin: 5,
 })
 
-<Button customStyle={buttonInAppStyle} big>
+<Button customStyle={buttonInAppStyle} big>Click me</Button>
 ```
 
-* If we would like to override also icon style we had to provide it as another prop, eg. `iconCustomStyle` or maybe better, make `customStyle` an object like 
+- If we would like to override also icon style we had to provide it as another prop, eg. `iconCustomStyle` or maybe better, make `customStyle` an object like
 
-  ```js
-  <Button customStyle={{ button: buttonStyle, icon: iconStyle }} /
+  ```jsx
+  const style = {
+    button: buttonStyle,
+    icon: iconStyle
+  }
+
+  <Button customStyle={style}>Click me</Button>
   ```
 
 ---
@@ -321,26 +326,31 @@ const ConnectedButton = connect(buttonStyles)(Button)
 <ConnectedButton color="red">Click me</ConnectedButton>
 ```
 
-* We can easily compose the component using HTML elements or custom components without  complex patterns
-* HOC pass to the component also raw styles (before transformation to the css class) and fela theme
+- We can easily compose the component using HTML elements or custom components without complex patterns
+- HOC pass to the component also raw styles (before transformation to the css class) and fela theme
 
   ```jsx
   import { connect } from 'react-fela'
   import * as buttonStyles from './styles';
 
-  const SuccessButton = ({ color, text, styles, rules, theme }) => (
-    <button className={styles.button} big>
-      {text}
-      <Icon type="check" extend={{ icon: rules.button }} />
-    </button>
-  )
+  const SuccessButton = ({ color, text, styles, rules, theme }) => {
+    const extend = {
+      icon: rules.button
+    }
+
+    return (
+      <button className={styles.button} big>
+        {text}
+        <Icon type="check" extend={extend} />
+      </button>
+    )
+  }
 
   const ConnectedButton = connect(buttonStyles)(Button)
 
   // Usage
   <ConnectedButton color="red">Click me</ConnectedButton>
   ```
-
 
 #### Overriding styles
 
@@ -371,15 +381,20 @@ const buttonExtend = {
 <ConnectedButton extend={buttonExtend}>Click me</ConnectedButton>
 ```
 
-* notice that we can omit the styles that are not needed to override (`button` style in our example)
-* be sure to **pass an object of styles not just the style to `extend`**, otherwise you get a `Cannot assign to read only property '0' of string` error
-* all props passed to Fela connected component are instantly provided to all styles, even to the extending styles
+- notice that we can omit the styles that are not needed to override (`button` style in our example)
+- be sure to **pass an object of styles not just the style to `extend`**, otherwise you get a `Cannot assign to read only property '0' of string` error
+- all props passed to Fela connected component are instantly provided to all styles, even to the extending styles
+
   ```jsx
   const buttonExtendStyle = ({ big }) => ({
     width: big ? 30 : 20,
   })
 
-  <ConnectedButton extend={{ button: buttonExtendStyle }} big />
+  const extend = {
+    button: buttonExtendStyle
+  }
+
+  <ConnectedButton extend={extend} big />
   ```
 
 ---
@@ -407,11 +422,10 @@ const Button = ({ color, big = false, text, icon = null }) => {
 <Button color="red">
 ```
 
-* object returned by `useFela` contains also  `theme` for case we would need it
-   ```js
-   const { css, theme } = useFela({ big, color })
-   ```
-
+- object returned by `useFela` contains also `theme` for case we would need it
+  ```js
+  const { css, theme } = useFela({ big, color });
+  ```
 
 #### Overriding styles
 
@@ -446,13 +460,15 @@ const buttonInAppStyle = () => ({
 Using `createComponent` we can quickly create a component without any JSX needed.
 
 ```js
-import { createComponent } from 'react-fela'
-import * as styles from './styles';
+import { createComponent } from "react-fela";
+import * as styles from "./styles";
 
-const Button = createComponent(styles.button, 'button', ['onClick']);
+const Button = createComponent(styles.button, "button", ["onClick"]);
 
 // Usage
-<Button big onClick={handleClick}>Click me</Button>
+<Button big onClick={handleClick}>
+  Click me
+</Button>;
 ```
 
 You may notice that we have to define which props we want to pass through to the `button` as a third parameter.  
@@ -460,13 +476,13 @@ Instead of static array of props names, we can use a function that receives comp
 
 ```js
 // pass only `onClick` prop to the button
-const Button = createComponent(styles.button, 'button', ['onClick']);
+const Button = createComponent(styles.button, "button", ["onClick"]);
 
 // pass all props that are set on Button to the button, this set also style modificators
-const Button = createComponent(styles.button, 'button', Object.keys);
+const Button = createComponent(styles.button, "button", Object.keys);
 
 // same as in first example, pass only `onClick` prop
-const Button = createComponent(styles.button, 'button', props => ['onClick']);
+const Button = createComponent(styles.button, "button", props => ["onClick"]);
 ```
 
 However there is even smarter way of proxying props. It's a `createComponentWithProxy` function and is useful if you don't know all the props you want to pass. It pass only those props which are not used in styles. If we need some prop to be used styles but still passed to the underlying component we can use the 3rd argument
@@ -482,8 +498,8 @@ const Button2 = createComponentWithProxy(styles.button, 'button', ['disabled']);
 <Button2 type="submit" color="red" disabled>Click me</Button>
 ```
 
-* `createComponent` creates [`FelaComponent`](#felacomponent) under the hood
-* We can't create a complex component structure using `createComponent` therefore it's more convinient for simple atomic components
+- `createComponent` creates [`FelaComponent`](#felacomponent) under the hood
+- We can't create a complex component structure using `createComponent` therefore it's more convinient for simple atomic components
 
 #### Overriding styles
 
@@ -510,30 +526,30 @@ const formButtonStyle = () => ({
 Pragma is a compiler directive, JSX pragma tells [how to transpile JSX elements](#https://www.gatsbyjs.org/blog/2019-08-02-what-is-jsx-pragma/). In default Babel transpile all JSX elements to call of `React.createElement` but this behaviour can be changed using JSX pragma.
 
 ```jsx
-import React from 'react';
+import React from "react";
 
-<div />
+<div />;
 
 // is transpiled into
 
-React.createElement('div');
+React.createElement("div");
 ```
 
 we can change it with special directive written in comment
 
 ```jsx
 /* @jsx fe */
-import { fe } from 'react-fela'
+import { fe } from "react-fela";
 
-<div />
+<div />;
 
 // is transpiled into
 
-fe('div');
+fe("div");
 ```
 
-This allows us to use a special prop `css` on any JSX element. What happens under the hood is that `fe` create a 
-[`FelaComponent`](#felacomponent) and pass a style into it. 
+This allows us to use a special prop `css` on any JSX element. What happens under the hood is that `fe` create a
+[`FelaComponent`](#felacomponent) and pass a style into it.
 
 ```js
 /* @jsx fe */
@@ -551,5 +567,5 @@ const Button = ({ color, text }) => (
 <Button>Click me</Button>
 ```
 
-* **we can't use style modificators** like `color` or `big` in styles because none prop is supplied into them. That's because Fela has no way how to 
-distinguish between regular and style modification prop and therefore doesn't know which prop should be avoided to set on the element.
+- **we can't use style modificators** like `color` or `big` in styles because none prop is supplied into them. That's because Fela has no way how to
+  distinguish between regular and style modification prop and therefore doesn't know which prop should be avoided to set on the element.
