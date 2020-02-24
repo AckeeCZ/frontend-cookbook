@@ -1,139 +1,4 @@
-# 🎨 Using Fela - tips & tricks
-
-Using [Fela](http://fela.js.org) for components styling is easy and pretty straightforward. But time to time we find that something that was easy to make in CSS with preprocessors isn't such obvious now. Here we should collect short useful recipes to prevent stuck in development because of some problem in basic things.
-
-- [Manipulation colors](#manipulating-colors)
-- [Animations using keyframes](#animations-using-keyframes)
-- [Styling components](#styling components)
-
-## Manipulating colors
-
-As we were using CSS preprocessory we used to use standard functions for manipulating colors like `darken`, `lighten` `rgba` (for setting alpha value) and so on. But Fela (and CSS in JS solutions generally) doesn't have such built-in functions, so how we could manipulate colors when using it? There is a tiny library called [`tinycolor2`](https://www.npmjs.com/package/tinycolor2) that is perfect for that purpose
-
-There is a few examples from the wild
-
-```js
-import tinyColor from "tinycolor2";
-
-export const buttonStyle = ({ theme }) => ({
-  color: theme.colors.grey,
-  backgroundColor: tinyColor(theme.colors.grey)
-    .darken(30)
-    .toString()
-});
-```
-
-```js
-import tinyColor from "tinycolor2";
-
-export const menuItemStyle = ({ theme }) => ({
-  backgroundColor: theme.colors.black,
-
-  ":hover": {
-    backgroundColor: [
-      theme.colors.grey, // this is a fallback value for the browsers which doesn't colors with alpha value
-      tinyColor(theme.colors.black)
-        .setAlpha(0.5)
-        .toRgbString()
-    ]
-  }
-});
-```
-
-But there is more, just have a look into [the documentation](https://www.npmjs.com/package/tinycolor2#methods) and then enjoy using it.
-
-## Animations using [keyframes](https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes)
-
-Our frontend developer Jirka has done a great job researching how keyframe animations work in Fela and has made a React component for using them with any other component.
-
-```jsx
-import React from "react";
-import PropTypes from "prop-types";
-import { RendererContext, ThemeContext } from "react-fela";
-
-function FelaKeyframe({ children, keyframe, ...props }) {
-  const renderer = React.useContext(RendererContext);
-  const theme = React.useContext(ThemeContext);
-  const animationName = React.useMemo(
-    () => renderer.renderKeyframe(keyframe, { ...props, theme }),
-    [keyframe, renderer, theme]
-  );
-  return children(animationName);
-}
-
-FelaKeyframe.propTypes = {
-  children: PropTypes.func.isRequired,
-  keyframe: PropTypes.func.isRequired
-};
-
-export default FelaKeyframe;
-```
-
-The component uses a [render props pattern](https://www.robinwieruch.de/react-render-props-pattern/) and it's easy to use.
-
-Let's say we want to create a loader component. It should be spinning shape, first we create the styles
-
-```js
-export const spinner = ({ theme: { colors }, animationName }) => ({
-  // definition of loader shape, it can be everything you want
-  width: "60px",
-  height: "60px",
-  margin: "1rem auto",
-  borderRadius: "50%",
-  backgroundColor: "transparent",
-  border: `2px solid ${colors.lightGrey}`,
-  borderTopColor: colors.text,
-  borderBottomColor: colors.text,
-
-  // this makes the animation, animationName is supplied from props and made by FelaKeyFrame
-  animation: `1000ms ${animationName} 'linear' infinite`
-});
-
-// keyframe definition that will be passed to FelaKeyFrame
-export const spin = () => ({
-  "0%": {
-    transform: "rotate(0deg)"
-  },
-  "100%": {
-    transform: "rotate(360deg)"
-  }
-});
-```
-
-then we use the `FelaKeyFrame` component to animate the loader
-
-```jsx
-import React from "react";
-import PropTypes from "prop-types";
-import { FelaComponent } from "react-fela";
-import FelaKeyFrame from "./FelaKeyFrame";
-
-import * as styles from "./Loader.styles";
-
-const Loader = ({ text }) => (
-  <FelaKeyframe keyframe={styles.spin}>
-    {animationName => (
-      <FelaComponent style={styles.spinner} animationName={animationName}>
-        {({ className }) => <div className={className} title={text} />}
-      </FelaComponent>
-    )}
-  </FelaKeyframe>
-);
-
-Loader.propTypes = {
-  text: PropTypes.string
-};
-
-Loader.defaultProps = {
-  text: ""
-};
-
-export default Loader;
-```
-
-and now the loader is spinning, awesome!
-
-## Styling components
+# Styling components
 
 There is severeal ways of styling components using Fela
 
@@ -161,7 +26,7 @@ const iconStyle = () => ({
 
 But first let's show several general tricks for styling
 
-### Class names
+## Class names
 
 Fela generates in development poorly debuggable class names like `_137u7ef`. But there is a way how to change it and make class names meaningful like `Button_button_137u7ef`.
 
@@ -183,7 +48,7 @@ const renderer = createRenderer({
 
 Unfortunatelly, that **works only for [`connect` HOC](#connect-hoc) and [`createComponent`](#createcomponent)**, other 3 methods will alway have meaningless class names.
 
-### Definition
+## Definition
 
 Usually we'll write styles as a functions, because it brings an advantage of passing props for modificating styles and using a theme.
 
@@ -205,7 +70,7 @@ const buttonStyle = {
 
 it's useful for prototyping and refactoring purposes rather than for daily use, because we value the consistency of writing styles and **functions are a preferred way**.
 
-### Composition
+## Composition
 
 Fela provides `combineRules` helper for composing more styles together
 
@@ -225,7 +90,7 @@ the two definitinos are equivalent.
 
 ---
 
-### `FelaComponent`
+## `FelaComponent`
 
 ```jsx
 import { FelaComponent } from 'react-fela'
@@ -271,7 +136,7 @@ const Button = ({ color, big = false, text, icon = null }) => (
 
 - We need to pass modificator props like `big`, `color` etc. into every `FelaComponent` which style want to use them
 
-#### Overriding styles
+### Overriding styles
 
 To override component styles from other component, we need to implement a special property called for example `customStyle` and use it to combine styles together
 
@@ -307,7 +172,7 @@ const buttonInAppStyle = () => ({
 
 ---
 
-### `connect` HOC
+## `connect` HOC
 
 ```jsx
 import { connect } from 'react-fela'
@@ -352,7 +217,7 @@ const ConnectedButton = connect(buttonStyles)(Button)
   <ConnectedButton color="red">Click me</ConnectedButton>
   ```
 
-#### Overriding styles
+### Overriding styles
 
 To override component styles we dont need to define any special prop, because Fela `connect` do it for as. It's called **`extend`** and it's alway an object of styles keyed by same styles names as provided to the `connect`.
 
@@ -399,7 +264,7 @@ const buttonExtend = {
 
 ---
 
-### `useFela` hook
+## `useFela` hook
 
 Hook returns css function that can transform styles to css class names
 
@@ -427,7 +292,7 @@ const Button = ({ color, big = false, text, icon = null }) => {
   const { css, theme } = useFela({ big, color });
   ```
 
-#### Overriding styles
+### Overriding styles
 
 Same as for [`FelaComponent`](#felacomponent) - special prop must be supplied.
 
@@ -455,7 +320,7 @@ const buttonInAppStyle = () => ({
 
 ---
 
-### `createComponent` and `createComponentWithProxy`
+## `createComponent` and `createComponentWithProxy`
 
 Using `createComponent` we can quickly create a component without any JSX needed.
 
@@ -501,7 +366,7 @@ const Button2 = createComponentWithProxy(styles.button, 'button', ['disabled']);
 - `createComponent` creates [`FelaComponent`](#felacomponent) under the hood
 - We can't create a complex component structure using `createComponent` therefore it's more convinient for simple atomic components
 
-#### Overriding styles
+### Overriding styles
 
 Component created with `createComponent` or `createComponentWithProxy` can receive `extend` prop as well as component created with [`connect` HOC](#connect-hoc).
 
@@ -521,7 +386,7 @@ const formButtonStyle = () => ({
 
 ---
 
-### jsx pragma `fe`
+## jsx pragma `fe`
 
 Pragma is a compiler directive, JSX pragma tells [how to transpile JSX elements](#https://www.gatsbyjs.org/blog/2019-08-02-what-is-jsx-pragma/). In default Babel transpile all JSX elements to call of `React.createElement` but this behaviour can be changed using JSX pragma.
 
