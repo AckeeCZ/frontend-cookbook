@@ -482,10 +482,26 @@ const Button2 = createComponentWithProxy(styles.button, 'button', ['disabled']);
 <Button2 type="submit" color="red" disabled>Click me</Button>
 ```
 
-
-
 * `createComponent` creates [`FelaComponent`](#felacomponent) under the hood
 * We can't create a complex component structure using `createComponent` therefore it's more convinient for simple atomic components
+
+#### Overriding styles
+
+Component created with `createComponent` or `createComponentWithProxy` can receive `extend` prop as well as component created with [`connect` HOC](#connect-hoc).
+
+```js
+import { createComponent } from 'react-fela'
+import * as styles from './styles';
+
+const Button = createComponent(styles.button, 'button');
+
+// Usage
+const formButtonStyle = () => ({
+  color: 'white',
+})
+
+<Button extend={formButtonStyle}>Click me</Button>
+```
 
 ---
 
