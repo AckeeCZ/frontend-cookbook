@@ -13,6 +13,7 @@
 -   [⚙️ Github Deploy Set-up with Travis pipeline ](pages/GithubPipeline.md)
 -   [🌵 Code versioning](pages/CodeVersioning.md)
 -   [🧨 Implementation](pages/Implementation.md)
+    -   [🛠 Eslint & Prettier for microsites](pages/implementation/EslintMicrosite.md)
     -   [🌄 Favicons in JS apps](pages/implementation/FaviconsWebpack.md)
     -   [🔥 Firebase authentication](pages/implementation/FirebaseAuth.md)
     -   [📊 Google Analytics](pages/implementation/GoogleAnalytics.md)
