@@ -7,7 +7,7 @@ PipelineReact {
     "feature/docsify-migration": '',
   ]
   baseURL = 'frontend-cookbook'
-  buildDir = ''
+  buildDir = './'
   bucketURL = [
     master: "gs://${baseURL}.ack.ee/",
     development: "gs://${baseURL}-development.ack.ee/",
