@@ -7,6 +7,7 @@
     -   [Bootstraping](pages/project/Bootstraping.md)
     -   [Build project using Jenkins](pages/project/NewJenkinsJob.md)
     -   [Setup spreadsheet translations](pages/project/SpreadsheetTranslations.md)
+    -   [Setup Lighthouse CI](pages/project/LighthouseSetup.md)
 -   [🍔 Tools we cook](pages/ToolsWeCook.md)
 -   [⚙️ Github Deploy Set-up with Travis pipeline ](pages/GithubPipeline.md)
 -   [🌵 Code versioning](pages/CodeVersioning.md)
