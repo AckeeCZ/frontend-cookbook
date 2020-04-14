@@ -22,7 +22,7 @@
     -   [🎨 Using Fela - tips & tricks](pages/implementation/FelaTipsAndTricks.md)
     -   [🛰 Handling network status with saga channels](pages/implementation/NetworkStatusAndSagaChannels.md)
     -   [⚓ Deep links](pages/implementation/DeepLinks.md)
-    -   [🤖 Custom Gatsby renderer](pages/implementation/CustomSSR.md)                                                         
+    -   [📝 Rich text formatting in Gatsby](pages/implementation/RichTextFormattingInGatsby.md)                                                         
 -  [✅ Automated testing](pages/Testing.md)
     -  [Essentials](pages/testing/Essentials.md)
 -  [🧩 VS Code extension](pages/VSCodeExtension.md)
