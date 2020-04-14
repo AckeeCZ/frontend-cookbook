@@ -3,14 +3,14 @@
 ---
 **NOTE**
 
-In version 4.0 React Intl does not lookup for `DOMParser` anymore and uses inner mechanism. So this guide apply to all versions bellow `4.0`
+In version 4.0 React Intl does not lookup for `DOMParser` anymore and uses inner mechanism. So this guide applies prior to version `4.0`
 
 ---
 
 # Description of the problem
 
 When using Gatsby with React Intl and it's rich text formatting we will find out that 
-our build HTML files contains escaped HTML tags which we have used in our rich text formatting(we can see them as strings). If Javascript is enabled (on client side) hydration will occur and these HTML tags will be treated as elements, not as strings anymore. But if Javascript is not enabled, user will see these elements as strings, which is not desirable.
+our build HTML files contains escaped HTML tags which we have used in our rich text formatting (we can see them as strings). If Javascript is enabled (on client side) hydration will occur and these HTML tags will be treated as elements, not as strings anymore. But if Javascript is not enabled, user will see these elements as strings, which is not desirable.
 
 Solution is to polyfill `DOMParser` object during server side rendering.
 
@@ -25,7 +25,7 @@ see these tags.
 
 2) Edit `gatsby-ssr.js` (located in the root project directory)
 * append `global.DOMParser = new (require('jsdom').JSDOM)().window.DOMParser;` at the   beginning of the file
-* but there is a pitfall, during the `build` process we get some sort of error messages about `missing canvas`, we will solve these problem in next step. 
+* but there is a pitfall, during the `build` process we get some sort of error messages about `missing canvas`, we will solve that problem in the next step. 
 
 3) Edit `gatsby-node.js` and fix `missing canvas` problem by ignoring requests to `canvas`, which our library cannot handle.
 
