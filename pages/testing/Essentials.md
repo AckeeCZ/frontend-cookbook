@@ -4,8 +4,6 @@ In general, you will always need at least **testing framework** & usually also *
 
 We are lucky that our testing framework also includes mocking funcionality (& much more, later about it) so that's all we need for now. There is already a recipe about [**how to start with Jest**](/pages/libraries/Jest.md) - our testing framework. Take all the text here as and addition to it.
 
-## TOC
-
 * [Matchers](#matchers)
   * [Comparation helpers](#comparation-helpers)
 * [Mocking](#mocking)
