@@ -26,11 +26,11 @@ The guidelines for balance between innovation and code stability.
 
 4. 🧑‍🏫**Presenting it to the team**
 
-   Remember that other team members have to use and first of all have to know how to use.
+   Remember that other team members have to use it and first of all have to know how to use it.
 
    Even though sharing the docs with your team could seem to be a good idea, imagine how many Slack messages you've ignored or missed to read. So maybe, it'd better idea to introduce it as [another topic during weekly FE meetings](https://frontend.ack.ee/).
 
-5. 🧑‍💻**Use it on a project**
+5. 🧑‍💻**Use it on a client project**
 
    Now, the only thing missing is to find the right time to use it on client projects.
 
