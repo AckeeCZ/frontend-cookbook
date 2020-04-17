@@ -24,7 +24,7 @@ The guidelines for balance between innovation and code stability.
 
 3. 🤓**Consultation with expert**
 
-   Consider to discuss your idea with team expert for that given thing based on the [Responsible matrix](https://frontend.ack.ee/responsibility-matrix). You might save a lot of time to yourself by receiving valuable feedback early on.
+   Consider discussing your idea with a team expert for that given thing based on the [Responsible matrix](https://frontend.ack.ee/responsibility-matrix). You might save a lot of time to yourself by receiving valuable feedback early on.
 
 4. ✅**The things that should be included**
 
