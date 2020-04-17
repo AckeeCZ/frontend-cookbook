@@ -16,7 +16,7 @@ The guidelines for balance between innovation and code stability.
 
 2. ⏳**Rought time estimate**
 
-   Next step is make at least rought time estimate:
+   Next step is to make at least a rough time estimate:
 
    - <5h - No need to get any approval.
    - 5-20h - An approval by your team leader required.
