@@ -36,7 +36,7 @@ The guidelines for balance between innovation and code stability.
 
    Remember that other team members have to use it and first of all have to know how to use it.
 
-   Even though sharing the docs with your team could seem to be a good idea, imagine how many Slack messages you've ignored or missed to read. So maybe, it'd better idea to introduce it as [another topic during weekly FE meetings](https://frontend.ack.ee/).
+   Even though sharing the docs with your team could seem to be a good idea, imagine how many Slack messages you've ignored or missed. So maybe, it'd be a better idea to introduce it as [another topic during weekly FE meetings](https://frontend.ack.ee/).
 
 6. 🧑‍💻**Use it on a client project**
 
