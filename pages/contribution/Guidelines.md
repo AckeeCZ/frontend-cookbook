@@ -4,7 +4,7 @@ The guidelines for balance between innovation and code stability.
 
 ---
 
-> Ok, I have a new idea. Now, what's the right way to implement it to move FE in Ackee forward and let other team members have a benefit from that?
+> Ok, I have a new idea. Now, what's the right way to implement it to move FE in Ackee forward and let other team members benefit from that?
 
 1. 💡**Idea validation**
 
