@@ -19,8 +19,8 @@ The guidelines for balance between innovation and code stability.
    Next step is to make at least a rough time estimate:
 
    - <5h - No need to get any approval.
-   - 5-20h - An approval by your team leader required.
-   - \>20h - An approval from with higher management required.
+   - 5-20h - You need an approval by your team leader required.
+   - \>20h - You need an approval from higher management.
 
 3. 🤓**Consultation with expert**
 
@@ -28,9 +28,9 @@ The guidelines for balance between innovation and code stability.
 
 4. ✅**The things that should be included**
 
-   - A **documentation**  each member can understand. Otherwise barely anyone will use it then. The form can be readme, next cookbook chapter or fully featured documentation with its own domain.
+   - A **documentation** each member can understand. Otherwise barely anyone will use it then. The form can be readme, next cookbook chapter or fully featured documentation with its own domain.
 
-   - **Tests** are heavily recommended. Don't forget it'll be your new responsibility, so this will save you time in the future.
+   - **Tests** are heavily recommended. Don't forget it'll be your new responsibility, so this will save your time in the future.
 
 5. 🧑‍🏫**Presenting it to the team**
 
@@ -42,7 +42,7 @@ The guidelines for balance between innovation and code stability.
 
    Now, the only thing missing is to find the right time to use it on client projects.
 
-   The beginning or some major breaking point could be the right time. Definitly, it wouldn't be a good idea to switch on that during a running sprint.
+   The beginning or some major breaking point could be the right time. Definitely, it wouldn't be a good idea to switch on that during a running sprint.
 
 > 🎉 **It's released and widely used! What's next?** 🎉
 >
