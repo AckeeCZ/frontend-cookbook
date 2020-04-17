@@ -28,7 +28,7 @@ The guidelines for balance between innovation and code stability.
 
 4. ✅**The things that should be included**
 
-   - A **documentation** that can each member to understand. Otherwise barely anyone will use it then. The form can be readme, next cookbook chapter or fully featured documentation with its own domain.
+   - A **documentation**  each member can understand. Otherwise barely anyone will use it then. The form can be readme, next cookbook chapter or fully featured documentation with its own domain.
 
    - **Tests** are heavily recommended. Don't forget it'll be your new responsibility, so this will save you time in the future.
 
