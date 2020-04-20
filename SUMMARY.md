@@ -26,3 +26,4 @@
 -  [✅ Automated testing](pages/Testing.md)
     -  [Essentials](pages/testing/Essentials.md)
 -  [🧩 VS Code extension](pages/VSCodeExtension.md)
+-  [🙌 Contribution guidelines](pages/contribution/Guidelines.md)
