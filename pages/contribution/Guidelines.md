@@ -12,7 +12,7 @@ The guidelines for balance between innovation and code stability.
 
    - [team values and goals](https://trello.com/b/tnr6JKtk/c%C3%ADle-vize-a-hodnoty-t%C3%BDmu),
    - [our stack [To Do]](/pages/application-stack),
-   - [our good practices [To Do]](/pages/BestPractices.html) and rest of this frontend cookbook.
+   - [our good practices [To Do]](/pages/BestPractices.md) and rest of this frontend cookbook.
 
 2. ⏳**Rought time estimate**
 
