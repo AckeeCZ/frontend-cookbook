@@ -20,6 +20,7 @@
   - [Displaying long lists of data](pages/implementation/LongDataLists.md)
   - [Using Fela - tips & tricks](pages/implementation/FelaTipsAndTricks.md)
   - [Handling network status with saga channels](pages/implementation/NetworkStatusAndSagaChannels.md)
+  - [Rich text formatting in Gatsby](pages/implementation/RichTextFormattingInGatsby.md)
   - [Deep links](pages/implementation/DeepLinks.md)
 - [✅ Automated testing](pages/Testing.md)
   - [Essentials](pages/testing/Essentials.md)
