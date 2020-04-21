@@ -1,6 +1,6 @@
 # ⛑ Setup Lighthouse CI
 
-[Lighthouse](https://developers.google.com/web/tools/lighthouse) is very famous tool from Google for checking our apps' performance, accesibility and a lot of others.
+[Lighthouse](https://developers.google.com/web/tools/lighthouse) is very famous tool from Google for checking apps' performance, accessibility and a lot of others.
 
 There is a brand new tool called [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) that is built up to help us checking our apps constantly and via our CI systems.
 
