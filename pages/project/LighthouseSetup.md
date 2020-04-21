@@ -11,7 +11,7 @@ Here are a few steps you need to go through to set up a project for using LHCI (
 * [Install LHCI package](#install-lhci-npm-package)
 * [Create a config file](#create-a-config-file)
 * [Set server base url](#set-server-base-url)
-* [Run a wizzard](#run-a-wizzard)
+* [Run a wizard](#run-a-wizard)
 * [Set the token](#set-the-token)
 * [Update package.json](#update-package.json)
 * [Update Jenkinsfile](#update-jenkinsfile)
@@ -20,7 +20,7 @@ Here are a few steps you need to go through to set up a project for using LHCI (
 * [See the result](#see-the-result)
 
 ## Install LHCI npm package
-Install [@lhci/cli](https://www.npmjs.com/package/@lhci/cli) globally into your computer to be able to run a wizzard later.
+Install [@lhci/cli](https://www.npmjs.com/package/@lhci/cli) globally into your computer to be able to run a wizard later.
 
 ```bash
 yarn global add @lhci/cli
@@ -33,7 +33,7 @@ npm install -g @lhci/cli
 ```
 
 ## Create a config file
-Create a file with name **.lighthouserc.json)** in your root directory. And fill it with this code:
+Create a file with name **.lighthouserc.json** in your root directory. And fill it with this code:
 
 ```json
 {
@@ -58,19 +58,19 @@ Create a file with name **.lighthouserc.json)** in your root directory. And fill
 ## Set server base url
 Set *serverBaseUrl* field with value you can find in internal password manager as **lighthouse server url**.
 
-## Run a wizzard
-Run wizzard at you project root directory with this command:
+## Run a wizard
+Run wizard at you project root directory with this command:
 
 ```bash
-lhci wizzard
+lhci wizard
 ```
 
 Then set the name your project. Please be specific and do not make a mistake here!!! Lhci server has no chance to edit it when its once created for now.
 
-After succesfull path through the wizzard you will get specific **token** which you **MUST** copy from bash and use in next step.
+After succesfull path through the wizard you will get specific **token** which you **MUST** copy from bash and use in next step.
 
 ## Set the token
-Copy the **token** from your wizzard and paste it into the **.lighthouserc.json** config file in field *token*. 
+Copy the **token** from your wizard and paste it into the **.lighthouserc.json** config file in field *token*. 
 
 > **DON'T FORGET TO SAVE IT AND PASTE IT THERE. TOKEN IS NO LONGER REACHABLE THEN!**
 
@@ -79,13 +79,13 @@ Copy the **token** from your wizzard and paste it into the **.lighthouserc.json*
 Add lhci/ci library into your **dependency** section in your *package.json* or simply install it as your local dependency with:
 
 ```bash
-yarn add @lhci/cli
+yarn add @lhci/cli -D
 ```
 
 or
 
 ```bash
-npm install @lhci/cli
+npm install @lhci/cli --save-dev
 ```
 
 ### Add run script
