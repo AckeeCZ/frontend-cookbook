@@ -3,6 +3,7 @@
 - [📚 Libraries & Frameworks](pages/LibrariesFrameworks.md)
   - [Cypress](pages/libraries/Cypress.md)
   - [Jest](pages/libraries/Jest.md)
+  - [gRPC](pages/libraries/gRPC.md)
 - [️🏗 Projects development](pages/Projects.md)
   - [Bootstraping](pages/project/Bootstraping.md)
   - [Setup spreadsheet translations](pages/project/SpreadsheetTranslations.md)
