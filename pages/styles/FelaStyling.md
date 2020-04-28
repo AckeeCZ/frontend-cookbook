@@ -8,7 +8,7 @@ There is severeal ways of styling components using Fela
 - [`createComponent` and `createComponentWithProxy`](#createcomponent-and-createcomponentwithproxy)
 - [jsx pragma `fe`](#jsx-pragma-fe)
 
-Will's go through all of them and look at how use them and what are their advantages and disadvantages.
+Wi'll go through all of them and look at how use them and what are their advantages and disadvantages.
 
 For all examples we assume file containing styles
 
@@ -350,7 +350,7 @@ const Button = createComponent(styles.button, "button", Object.keys);
 const Button = createComponent(styles.button, "button", props => ["onClick"]);
 ```
 
-However there is even smarter way of proxying props. It's a `createComponentWithProxy` function and is useful if you don't know all the props you want to pass. It pass only those props which are not used in styles. If we need some prop to be used styles but still passed to the underlying component we can use the 3rd argument
+However there is even smarter way of proxying props. It's a `createComponentWithProxy` function and is useful if you don't know all the props you want to pass. It passes only those props which are not used in styles. If we need some prop to be used styles but still passed to the underlying component we can use the 3rd argument
 
 ```js
 const Button = createComponentWithProxy(styles.button, 'button');

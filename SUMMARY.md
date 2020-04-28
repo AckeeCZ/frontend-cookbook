@@ -20,7 +20,7 @@
     -   [📜 Displaying long lists of data](pages/implementation/LongDataLists.md)
     -   [🛰 Handling network status with saga channels](pages/implementation/NetworkStatusAndSagaChannels.md)
     -   [⚓ Deep links](pages/implementation/DeepLinks.md)
-- [🎨 Styles & styling](pages/StylesAndStyling.md)
+- [🎨 Styling](pages/StylesAndStyling.md)
     -   [ Fela - tips & tricks](pages/styles/FelaTipsAndTricks.md)
     -   [ Fela - styling components](pages/styles/FelaStyling.md)
     -   [ Sharing variables between CSS & JS](pages/styles/SharingVariables.md)
