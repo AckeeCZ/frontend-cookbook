@@ -80,13 +80,12 @@ import { combineRules } from "fela";
 const formButtonStyle = combineRules(buttonStyle, formItemStyle);
 ```
 
-however there is a syntax sugar definition
+however there is a syntax sugar definition, an array of styles, which are automatically combined by Fela
+when passed to [`FelaComponent`](#felacomponent)'s `style` prop, [`useFela`](#usefela-hook)'s `css` decorator, etc.
 
 ```js
 const formButtonStyle = [buttonStyle, formItemStyle];
 ```
-
-the two definitinos are equivalent.
 
 ---
 
@@ -192,7 +191,7 @@ const ConnectedButton = connect(buttonStyles)(Button)
 ```
 
 - We can easily compose the component using HTML elements or custom components without complex patterns
-- HOC pass to the component also raw styles (before transformation to the css class) and fela theme
+- HOC passes also raw styles (`rules` prop, styles before transformation to the css class) and fela theme to the component
 
   ```jsx
   import { connect } from 'react-fela'
@@ -260,6 +259,52 @@ const buttonExtend = {
   }
 
   <ConnectedButton extend={extend} big />
+  ```
+- we can even make styles extend passing through the component into the inner component. Let's say the icon in our example is a component `Icon` and we need to extend it's styles. It's not a problem from insied the `Button` component, but if we want to allow styles be extended by `ConnectButton`, we need to define style named `icon`, even if empty.
+
+  ```jsx
+  const Button = ({ color, big = false, text, icon = null, styles, rules }) => (
+    <button className={styles.button} big as="button">
+      {text}
+      {icon && <Icon extend={{ icon: rules.icon }}>{icon}</Icon>}
+    </button>
+  )
+
+  const buttonStyle = ({ big }) => ({ 
+    fontSize: big ? '1.5rem' : '1rem',
+  })
+
+  const iconStyle = () => ({})
+
+  const ConnectedButton = connect({ button: buttonStyle, icon: iconStyle })(Button)
+  ```
+
+  that unlocks the possibility to extend icon styles by component that uses the button
+
+  ```jsx
+  const iconExtendStyle = () => ({
+    marginLeft: 10
+  })
+
+  <ConnectedButton extend={{ icon: iconExtendStyle } big />
+  ```
+
+  `iconExtendStyle` extends `iconStyle`, both compined together then extend `Icon`'s `icon` style.
+
+  However **there is one tricky part** ☝️. The icon's style is composed during it's way through the components and resolved in final `Icon` component. But there is no `big` prop in `Icon` so this style would always evaluated to left margin equal `10`.
+  
+  ```jsx
+  const iconExtendStyle = ({ big }) => ({
+    marginLeft: big ? 15 : 10,
+  })
+
+  <ConnectedButton extend={{ icon: iconExtendStyle } big />
+  ```
+  
+  The solution is to pass the `big` prop to the `Icon` component inside `Button`. Be aware of that, otherwise you are sentenced to spent a lot of time staring into the code and finding out why it's not working 😁
+
+  ```jsx
+  {icon && <Icon extend={{ icon: rules.icon }} big={big}>{icon}</Icon>}
   ```
 
 ---
