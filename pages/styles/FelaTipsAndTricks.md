@@ -1,9 +1,9 @@
 # 🎨 Using Fela - tips & tricks
 
-Using [Fela](http://fela.js.org) for components styling is easy and pretty straightforward. But time to time we find that something  that was easy to make in CSS with preprocessors isn't such obvious now. Here we should collect short useful recipes to prevent stuck in development because of some problem in basic things.
+Using [Fela](http://fela.js.org) for components styling is easy and pretty straightforward. But time to time we find that something that was easy to make in CSS with preprocessors isn't such obvious now. Here we should collect short useful recipes to prevent stuck in development because of some problem in basic things.
 
-* [Manipulation colors](#manipulating-colors)
-* [Animations using keyframes](#animations-using-keyframes)
+- [Manipulation colors](#manipulating-colors)
+- [Animations using keyframes](#animations-using-keyframes)
 
 ## Manipulating colors
 
