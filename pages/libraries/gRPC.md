@@ -8,16 +8,16 @@
 
 > gRPC-Web is a cutting-edge spec that enables invoking gRPC services from modern browsers.
 
-[gRPC-web](https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-WEB.md) protocol is different from native gRPC protocol since there are several limitation in browser which makes direct use of gRPC protocol impossible. To be able to communicate with a service using native gRPC protocol, a proxy to translate between gRPC-web and gRPC protocols is needed. [Envoy](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_protocols/grpc) can act as the proxy.
+[gRPC-web](https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-WEB.md) protocol is different from native gRPC protocol since there are several limitations in browser which makes direct use of gRPC protocol impossible. To be able to communicate with a service using native gRPC protocol, a proxy to translate between gRPC-web and gRPC protocols is needed. [Envoy](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/other_protocols/grpc) can act as the proxy.
 
 ### Implementations
 
 To this date, there are two implementation of gRPC-web available via NPM.
 
 - [grpc-web](https://www.npmjs.com/package/grpc-web)
-- [improbabel-eng/grpc-web](https://www.npmjs.com/package/@improbable-eng/grpc-web)
+- [improbable-eng/grpc-web](https://www.npmjs.com/package/@improbable-eng/grpc-web)
 
-Since [improbabel-eng/grpc-web](https://www.npmjs.com/package/@improbable-eng/grpc-web) has a better support for usage on both server and client (usefull if you need the same code to run in both browser and Node environment) and has overall better implementation, we use this package.
+Since [improbable-eng/grpc-web](https://www.npmjs.com/package/@improbable-eng/grpc-web) has a better support for usage on both server and client (usefull if you need the same code to run in both browser and Node environment) and has overall better implementation, we use this package.
 
 ### NPM Dependencies
 
@@ -29,9 +29,9 @@ Since [improbabel-eng/grpc-web](https://www.npmjs.com/package/@improbable-eng/gr
 
 ### Usage
 
-Say you have a description of a service in `./src/proto` folder. You want these \*.proto files to be compiled to JavaScript code you can use in your application. That is what afore mentioned `protoc` compiler does. It compiles \*.proto files to \*.js files. For easy usage with NPM, we use `grpc-tools` which gives us a binary for `prococ`
+Say you have a description of a service in `./src/proto` folder. You want these \*.proto files to be compiled to JavaScript code you can use in your application. That is what afore mentioned `protoc` compiler does. It compiles \*.proto files to \*.js files. For easy usage with NPM, we use `grpc-tools` which gives us a binary for `protoc`
 
-`protoc` alone would compile just gRPC messages in JavaScript since it is plain JavaScript. Communication layer is added by `improbabel-eng/grpc-web`. To use it, you need to tell it to the compiler somehow. That is what is `ts-protoc-gen` plugin for.
+`protoc` alone would compile just gRPC messages in JavaScript since it is plain JavaScript. Communication layer is added by `improbable-eng/grpc-web`. To use it, you need to tell it to the compiler somehow. That is what is `ts-protoc-gen` plugin for.
 
 Now, you can write an NPM script to generate JavaScript code:
 
