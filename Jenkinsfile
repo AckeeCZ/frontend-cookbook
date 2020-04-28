@@ -1,15 +1,17 @@
 PipelineReact {
   slackChannel = '#ci-frontend-cookbook'
   buildCommand = [
-    master: 'npm install && npm run gitbook:install && npm run build',
-    stage: 'npm install && npm run gitbook:install && npm run build',
-    development: 'npm install && npm run gitbook:install && npm run build',
+    master: '',
+    stage: '',
+    development: '',
+    "feature/docsify-migration": '',
   ]
   baseURL = 'frontend-cookbook'
-  buildDir = '_book'
+  buildDir = './'
   bucketURL = [
     master: "gs://${baseURL}.ack.ee/",
     development: "gs://${baseURL}-development.ack.ee/",
+    "feature/docsify-migration": "gs://${baseURL}-docsify.ack.ee/",
   ]
   nodeEnv = '-e NODE_PATH=./app:./config'
   nodeImage = 'node:8'
