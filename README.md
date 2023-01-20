@@ -1,4 +1,8 @@
-> This repository is not used anymore, our cookbook is migrated to [Notion](https://ackee-frontend.notion.site/48a03d804e2b4f6a800c9abb32b3c636?v=cd3e66886fe44d20bb56a01a101dffe5)
+## Repository deprecated (01/2023)
+
+This repository is not used anymore, our cookbook is migrated to [Notion](https://ackee-frontend.notion.site/48a03d804e2b4f6a800c9abb32b3c636?v=cd3e66886fe44d20bb56a01a101dffe5)
+
+---
 
 ![Ackee javascript](img/ackee_javascript.jpeg)
 
